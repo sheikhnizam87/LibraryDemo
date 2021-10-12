@@ -34,6 +34,11 @@ public class ImportService {
 
     }
 
+    /**
+     * Method to import list of books in the library
+     *
+     * @param bookTemplateList
+     */
     public void importBookList(List<BookTemplate> bookTemplateList) {
 
         Map<String, BookTemplate> booksInGroups = bookTemplateList.stream()
@@ -51,17 +56,17 @@ public class ImportService {
                     return book;
                 }).orElseGet(() -> {
                     BookTemplate bookTemplate = booksInGroups.get(entry.getKey());
-                    Book book = new Book(bookTemplate.getIsbn(), bookTemplate.getName(), bookTemplate.getAuthor(), booksWithCopies.get(entry.getKey()).intValue());
+                    Book book = new Book(bookTemplate.getIsbn().toLowerCase(), bookTemplate.getName().toLowerCase(), bookTemplate.getAuthor().toLowerCase(), booksWithCopies.get(entry.getKey()).intValue());
                     bookRepository.save(book);
 
                     List<Tag> tags = new ArrayList<>();
                     for (String tagName : bookTemplate.getTags()) {
-                        Optional<List<Tag>> tagList = tagRepository.findTagByName(tagName);
+                        Optional<List<Tag>> tagList = tagRepository.findTagByName(tagName.toLowerCase());
                         Tag tag;
                         if (tagList.isPresent() && tagList.get().size() > 0) {
                             tag = tagList.get().get(0);
                         } else {
-                            tag = new Tag(tagName);
+                            tag = new Tag(tagName.toLowerCase());
                         }
                         tags.add(tag);
                     }

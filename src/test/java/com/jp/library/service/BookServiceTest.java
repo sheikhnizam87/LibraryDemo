@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 
 
-
 @SpringBootTest
 public class BookServiceTest {
 
@@ -35,15 +34,15 @@ public class BookServiceTest {
     @Transactional
     public void testRetrieveBookAndTagsByBookId() {
         ResponseObject response = bookService.getBookById("576875");
-        assertEquals("Life of Pi", response.getName());
+        assertEquals("life of pi", response.getName());
         assertEquals(1, response.getTags().size());
-        assertTrue(response.getTags().stream().anyMatch(tag -> tag.equals("Suspense")));
+        assertTrue(response.getTags().stream().anyMatch(tag -> tag.equals("suspense")));
     }
 
     @Test
     @Transactional
     public void testRetrieveBookAndTagsBy_invalidBookId() {
-        assertThrows(NotFoundException.class,()->bookService.getBookById("6789654"));
+        assertThrows(NotFoundException.class, () -> bookService.getBookById("6789654"));
     }
 
 
@@ -54,14 +53,14 @@ public class BookServiceTest {
 
         BookTemplate bookTemplate1 = new BookTemplate();
         bookTemplate1.setIsbn("2445343");
-        bookTemplate1.setName("Heidi");
-        bookTemplate1.setAuthor("Johanna Spyri");
-        bookTemplate1.setTags(Arrays.asList("Poetry","Biography"));
+        bookTemplate1.setName("heidi");
+        bookTemplate1.setAuthor("johanna spyri");
+        bookTemplate1.setTags(Arrays.asList("poetry", "biography"));
 
         bookService.addBook(bookTemplate1);
         bookService.addBook(bookTemplate1);
         ResponseObject response = bookService.getBookById("2445343");
-        assertEquals("Heidi", response.getName());
+        assertEquals("heidi", response.getName());
         assertEquals(2, response.getTags().size());
         assertEquals(2, response.getCopies());
 
@@ -77,10 +76,10 @@ public class BookServiceTest {
         BookTemplate bookTemplate2 = new BookTemplate();
         bookTemplate2.setIsbn("324555");
         bookTemplate2.setName("");
-        bookTemplate2.setAuthor("Jon Krakauer");
-        bookTemplate2.setTags(Arrays.asList("Mystery","Humor"));
+        bookTemplate2.setAuthor("jon krakauer");
+        bookTemplate2.setTags(Arrays.asList("mystery", "humor"));
 
-        assertThrows(BadRequestException.class,()->bookService.addBook(bookTemplate2));
+        assertThrows(BadRequestException.class, () -> bookService.addBook(bookTemplate2));
     }
 
     @Test
@@ -91,7 +90,7 @@ public class BookServiceTest {
         ResponseObject response = bookService.getBookById("7545454");
         assertNotNull(response.getIsbn());
         bookService.deleteBookById("7545454");
-        assertThrows(NotFoundException.class,()->bookService.getBookById("7545454"));
+        assertThrows(NotFoundException.class, () -> bookService.getBookById("7545454"));
     }
 
 
@@ -99,14 +98,14 @@ public class BookServiceTest {
     @DirtiesContext
     @Transactional
     public void testDeleteBookByEmptyId() {
-        assertThrows(BadRequestException.class,()->bookService.deleteBookById(""));
+        assertThrows(BadRequestException.class, () -> bookService.deleteBookById(""));
     }
 
     @Test
     @DirtiesContext
     @Transactional
     public void testDeleteBookByInvalidId() {
-        assertThrows(Exception.class,()->bookService.deleteBookById("12345"));
+        assertThrows(Exception.class, () -> bookService.deleteBookById("12345"));
     }
 
 
@@ -116,16 +115,16 @@ public class BookServiceTest {
     public void testUpdateBooksWithTags() {
 
         ResponseObject response = bookService.getBookById("243566");
-        assertEquals(2,response.getTags().size());
+        assertEquals(2, response.getTags().size());
         BookTemplate bookTemplate1 = new BookTemplate();
         bookTemplate1.setIsbn("243566");
-        bookTemplate1.setName("Stuart Little");
-        bookTemplate1.setAuthor("E.B. White");
-        bookTemplate1.setTags(Arrays.asList("Poetry","Biography","Mystery"));
+        bookTemplate1.setName("stuart little");
+        bookTemplate1.setAuthor("e.b. white");
+        bookTemplate1.setTags(Arrays.asList("poetry", "biography", "mystery"));
 
-        bookService.updateBook(bookTemplate1);
+        bookService.updateBook(bookTemplate1.getIsbn().toLowerCase(), bookTemplate1);
         response = bookService.getBookById("243566");
-        assertEquals("Stuart Little", response.getName());
+        assertEquals("stuart little", response.getName());
         assertEquals(3, response.getTags().size());
 
     }

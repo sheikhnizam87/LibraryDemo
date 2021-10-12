@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity badRequestExceptionHandler(BadRequestException e) {
         log.error(e.getMessage());
         e.printStackTrace();
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body(new Object());
     }
 
     @ResponseBody

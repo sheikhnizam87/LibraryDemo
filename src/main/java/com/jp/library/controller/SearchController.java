@@ -23,21 +23,21 @@ public class SearchController {
 
 
     @GetMapping("/byName/{bookName}")
-    @ApiOperation(value ="get book details by book name", notes ="provide name of a book to lookup list of  book in the library")
-    public ResponseEntity<List<ResponseObject>> getBooksByName(@PathVariable("bookName") String bookName){
+    @ApiOperation(value = "get book details by book name", notes = "provide name of a book to lookup list of  book in the library")
+    public ResponseEntity<List<ResponseObject>> getBooksByName(@PathVariable("bookName") String bookName) {
         return ResponseEntity.ok(searchService.getBookByName(bookName));
     }
 
     @GetMapping("/byAuthor/{authorName}")
-    @ApiOperation(value ="get book details by author name", notes ="provide author name to lookup books authored by in the library")
+    @ApiOperation(value = "get book details by author name", notes = "provide author name to lookup books authored by in the library")
 
-    public ResponseEntity<List<ResponseObject>> getBooksByAuthorName(@PathVariable("authorName") String authorName){
+    public ResponseEntity<List<ResponseObject>> getBooksByAuthorName(@PathVariable("authorName") String authorName) {
         return ResponseEntity.ok(searchService.getBookByAuthorName(authorName));
     }
 
     @GetMapping("/byTag/{tag}")
-    @ApiOperation(value ="get book details by isbn", notes ="provide tag to lookup list of books marked under specific tag in the library")
-    public ResponseEntity<List<ResponseObject>> getBooksByTagName(@PathVariable("tag") String tagName){
+    @ApiOperation(value = "get book details by isbn", notes = "provide tag to lookup list of books marked under specific tag in the library")
+    public ResponseEntity<List<ResponseObject>> getBooksByTagName(@PathVariable("tag") String tagName) {
         return ResponseEntity.ok(searchService.getBookByTagName(tagName));
     }
 }

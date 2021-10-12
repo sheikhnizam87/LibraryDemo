@@ -28,7 +28,7 @@ public class BookController {
     @PutMapping("/update/{isbn}")
     @ApiOperation(value ="update any existing book in the library", notes ="provide book details with isbn to update the details in the library")
     public ResponseEntity<ResponseObject> updateBook(@PathVariable(value = "isbn") String isbn, @RequestBody BookTemplate requestObject) {
-        return ResponseEntity.ok(bookService.updateBook(requestObject));
+        return ResponseEntity.ok(bookService.updateBook(isbn, requestObject));
 
     }
 

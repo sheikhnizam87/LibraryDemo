@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 public class Utility {
 
     public static ResponseObject createResponseObject(Book book) {
-        List<String> tagNameList = book.getTags().stream().map(tag->tag.getName()).collect(Collectors.toList());
-        ResponseObject response = new ResponseObject(book.getIsbn(),book.getName(),book.getAuthor(),tagNameList,book.getCopies());
+        List<String> tagNameList = book.getTags().stream().map(tag -> tag.getName()).collect(Collectors.toList());
+        ResponseObject response = new ResponseObject(book.getIsbn(), book.getName(), book.getAuthor(), tagNameList, book.getCopies());
         return response;
     }
 
     public static List<ResponseObject> createResponseObjectList(List<Book> books) {
-        return books.stream().map(book->createResponseObject(book)).collect(Collectors.toList());
+        return books.stream().map(book -> createResponseObject(book)).collect(Collectors.toList());
     }
 }

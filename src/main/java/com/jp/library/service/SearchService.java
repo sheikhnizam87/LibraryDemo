@@ -29,32 +29,50 @@ public class SearchService {
         this.requestValidator = requestValidator;
     }
 
+    /**
+     * Method to search list of books by name
+     *
+     * @param bookName
+     * @return
+     */
     public List<ResponseObject> getBookByName(String bookName) {
         requestValidator.checkBookName(bookName);
-        Optional<List<Book>> bookList =  bookRepository.findBookByName(bookName);
-        if(bookList.isPresent() && bookList.get().size()>0){
+        Optional<List<Book>> bookList = bookRepository.findBookByName(bookName.toLowerCase());
+        if (bookList.isPresent() && bookList.get().size() > 0) {
             return Utility.createResponseObjectList(bookList.get());
         } else {
             return new ArrayList<>();
         }
     }
 
+    /**
+     * Method to search list of books by Author
+     *
+     * @param authorName
+     * @return
+     */
     public List<ResponseObject> getBookByAuthorName(String authorName) {
         requestValidator.checkAuthorName(authorName);
-        Optional<List<Book>> bookList =  bookRepository.findByAuthor(authorName);
-        if(bookList.isPresent() && bookList.get().size()>0){
+        Optional<List<Book>> bookList = bookRepository.findByAuthor(authorName.toLowerCase());
+        if (bookList.isPresent() && bookList.get().size() > 0) {
             return Utility.createResponseObjectList(bookList.get());
         } else {
             return new ArrayList<>();
         }
     }
 
+    /**
+     * Method to search list of books by tag name
+     *
+     * @param tagName
+     * @return
+     */
     public List<ResponseObject> getBookByTagName(String tagName) {
         requestValidator.checkTagName(tagName);
-        Optional<List<Tag>> tagList = tagRepository.findTagByName(tagName);
+        Optional<List<Tag>> tagList = tagRepository.findTagByName(tagName.toLowerCase());
 
-        if(tagList.isPresent() && tagList.get().size()>0){
-            List<Book> bookList = tagList.get().stream().flatMap(tag-> tag.getBooks().stream()).collect(Collectors.toList());
+        if (tagList.isPresent() && tagList.get().size() > 0) {
+            List<Book> bookList = tagList.get().stream().flatMap(tag -> tag.getBooks().stream()).collect(Collectors.toList());
             return Utility.createResponseObjectList(bookList);
         } else {
             return new ArrayList<>();

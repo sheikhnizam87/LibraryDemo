@@ -18,31 +18,25 @@ public class CSVParser implements Parser {
 
         List<BookTemplate> bookTemplateList = new ArrayList<>();
         CSVReader reader = null;
-        try
-        {
+        try {
             reader = new CSVReader(new FileReader(path));
-            String [] nextLine;
-            while ((nextLine = reader.readNext()) != null)
-            {
-                if(nextLine.length == 4) {
-                    BookTemplate bookTemplate =  new BookTemplate();
-                    if(StringUtils.isAnyBlank(nextLine)){
-                        continue;
-                    } else{
+            String[] nextLine;
+            while ((nextLine = reader.readNext()) != null) {
+                if (nextLine.length == 4) {
+                    BookTemplate bookTemplate = new BookTemplate();
+                    if (!StringUtils.isAnyBlank(nextLine)) {
                         bookTemplate.setIsbn(nextLine[0]);
                         bookTemplate.setName(nextLine[1]);
                         bookTemplate.setAuthor(nextLine[2]);
 
-                        List<String> tagList =Arrays.asList(nextLine[3].trim().split(","));
+                        List<String> tagList = Arrays.asList(nextLine[3].trim().split(","));
                         bookTemplate.setTags(tagList);
                         bookTemplateList.add(bookTemplate);
 
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return bookTemplateList;

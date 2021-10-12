@@ -68,7 +68,7 @@ public class ImportServiceTest {
             Optional<List<Book>> bookList = bookRepository.findBookByName(bookTemplate.getName());
             if (bookList.isPresent() && bookList.get().size() > 0) {
                 assertEquals(bookTemplate.getName(), bookList.get().get(0).getName());
-                if (bookList.get().get(0).getName().equals("First Goal")) {
+                if (bookList.get().get(0).getName().equals("first goal")) {
                     assertEquals(4, bookList.get().get(0).getCopies());
                 }
             } else {
@@ -80,37 +80,33 @@ public class ImportServiceTest {
     @Test
     @DirtiesContext
     @Transactional
-    public void testUploadingAfile(){
-        String encodedFile ="{\"formData\":\"data:text/csv;base64,MzU0NSxEYSB2aW5jaSBjb2RlLERhbiBicm93biwiU3VzcGVuc2UsVGhyaWxsZXIiCjk4NzY1LE9yZGVyIG9mIHBoZW9uaXgsSksgUm93bGluZyxGYW50YXN5Cjc2MzQ2OSxUaGUgR3JlYXQgR2F0c2J5LEYuIEZpdHhHZXJhbGQsIk5vdmVsLEZpY3Rpb25hbCIK\"}";
-////        String encodedFile ="{\"formData\":\"data:text/csv;base64,MzU0NSxEYSB2aW5jaSBjb2RlLERhbiBicm93biwic3VzcGVuc2UsVGhyaWxsZXIiCjk4NzY1LE9yZGVyIG9mIHBoZW9uaXgsSksgUm93bGluZyxGYW50YXN5Cjc2MzQ2OSwgV2FyIGFuZCBQZWFjZSxMZW8gVG9sc3RveSwiTm92ZWwsRmljdGlvbmFsIgo=\"}";
-//        String encodedFile ="{\"formData\":\"data:text/csv;base64,MzU0NSxEYSB2aW5jaSBjb2RlLERhbiBicm93biwic3VzcGVuc2UsVGhyaWxsZXIiCjk4NzY1LE9yZGVyIG9mIHBoZW9uaXgsSksgUm93bGluZyxGYW50YXN5Cjc2MzQ2OSwgV2FyIGFuZCBQZWFjZSxMZW8gVG9sc3RveSwiTm92ZWwsRmljdGlvbmFsIgo=\"}"
+    public void testUploadingAfile() {
+        String encodedFile = "{\"formData\":\"data:text/csv;base64,MzU0NSxEYSB2aW5jaSBjb2RlLERhbiBicm93biwiU3VzcGVuc2UsVGhyaWxsZXIiCjk4NzY1LE9yZGVyIG9mIHBoZW9uaXgsSksgUm93bGluZyxGYW50YXN5Cjc2MzQ2OSxUaGUgR3JlYXQgR2F0c2J5LEYuIEZpdHhHZXJhbGQsIk5vdmVsLEZpY3Rpb25hbCIK\"}";
         importService.processRequest(encodedFile);
 
-        Optional<List<Book>> bookList1 = bookRepository.findBookByName("Da vinci code");
+        Optional<List<Book>> bookList1 = bookRepository.findBookByName("da vinci code");
         if (bookList1.isPresent() && bookList1.get().size() > 0) {
-            assertEquals("Da vinci code", bookList1.get().get(0).getName());
-            assertEquals("Dan brown", bookList1.get().get(0).getAuthor());
+            assertEquals("da vinci code", bookList1.get().get(0).getName());
+            assertEquals("dan brown", bookList1.get().get(0).getAuthor());
         } else {
             fail("Book not found in Library");
         }
 
-        Optional<List<Book>> bookList2 = bookRepository.findBookByName("The Great Gatsby");
+        Optional<List<Book>> bookList2 = bookRepository.findBookByName("the great gatsby");
         if (bookList2.isPresent() && bookList2.get().size() > 0) {
-            assertEquals("The Great Gatsby", bookList2.get().get(0).getName());
-            assertEquals("F. FitxGerald", bookList2.get().get(0).getAuthor());
+            assertEquals("the great gatsby", bookList2.get().get(0).getName());
+            assertEquals("f. fitxgerald", bookList2.get().get(0).getAuthor());
         } else {
             fail("Book not found in Library");
         }
 
-        Optional<List<Book>> bookList3 = bookRepository.findBookByName("Order of pheonix");
+        Optional<List<Book>> bookList3 = bookRepository.findBookByName("order of pheonix");
         if (bookList3.isPresent() && bookList3.get().size() > 0) {
-            assertEquals("Order of pheonix", bookList3.get().get(0).getName());
-            assertEquals("JK Rowling", bookList3.get().get(0).getAuthor());
+            assertEquals("order of pheonix", bookList3.get().get(0).getName());
+            assertEquals("jk rowling", bookList3.get().get(0).getAuthor());
         } else {
             fail("Book not found in Library");
         }
-
-
 
 
     }

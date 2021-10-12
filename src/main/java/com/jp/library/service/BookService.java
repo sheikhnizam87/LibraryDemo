@@ -34,6 +34,13 @@ public class BookService {
         this.requestValidator = requestValidator;
     }
 
+    /**
+     * Method to add Book in the library , each request can add one book at a time.
+     *
+     * @param request
+     */
+
+
     public void addBook(BookTemplate request) {
         requestValidator.validateRequest(request);
         Optional<Book> optionalBook = bookRepository.findById(request.getIsbn());
@@ -41,7 +48,7 @@ public class BookService {
         if (optionalBook.isPresent()) {
             countCopies = optionalBook.get().getCopies();
         }
-        Book book = new Book(request.getIsbn(), request.getName(), request.getAuthor(), countCopies + 1);
+        Book book = new Book(request.getIsbn().toLowerCase(), request.getName().toLowerCase(), request.getAuthor().toLowerCase(), countCopies + 1);
 
         List<Tag> tags = extractTagsFromRequest(request);
         if (tags.size() > 0) {
@@ -53,13 +60,20 @@ public class BookService {
     }
 
 
-    public ResponseObject updateBook(BookTemplate request) {
+    /**
+     * Method to update Book details in the library by Id, each request can add one book at a time.
+     *
+     * @param isbn
+     * @param request
+     * @return
+     */
+    public ResponseObject updateBook(String isbn, BookTemplate request) {
         requestValidator.validateRequest(request);
-        Optional<Book> optionalBook = bookRepository.findById(request.getIsbn());
+        Optional<Book> optionalBook = bookRepository.findById(isbn);
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
-            book.setName(request.getName());
-            book.setAuthor(request.getAuthor());
+            book.setName(request.getName().toLowerCase());
+            book.setAuthor(request.getAuthor().toLowerCase());
             book.setTags(new ArrayList<>());
 
             List<Tag> tags = extractTagsFromRequest(request);
@@ -76,10 +90,15 @@ public class BookService {
         }
     }
 
-
+    /**
+     * Method to fetch Book details by Id
+     *
+     * @param bookId
+     * @return
+     */
     public ResponseObject getBookById(String bookId) {
         requestValidator.checkIsbn(bookId);
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
+        Optional<Book> optionalBook = bookRepository.findById(bookId.toLowerCase());
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             return Utility.createResponseObject(book);
@@ -88,9 +107,14 @@ public class BookService {
         }
     }
 
+    /**
+     * Method to delete book details by Id
+     *
+     * @param bookId
+     */
     public void deleteBookById(String bookId) {
         requestValidator.checkIsbn(bookId);
-        bookRepository.deleteById(bookId);
+        bookRepository.deleteById(bookId.toLowerCase());
         log.info("Book with Isbn :" + bookId + " is successfully deleted");
     }
 

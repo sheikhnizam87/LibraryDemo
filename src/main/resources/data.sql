@@ -1,23 +1,23 @@
 insert into tag(id,name)
-values(1000,'Fictional');
+values(1000,'fictional');
 insert into tag(id,name)
-values(1001,'Fantasy');
+values(1001,'fantasy');
 insert into tag(id,name)
-values(1002,'Horror');
+values(1002,'horror');
 insert into tag(id,name)
-values(1003,'Thriller');
+values(1003,'thriller');
 insert into tag(id,name)
-values(1004,'Suspense');
+values(1004,'suspense');
 
 
 insert into book(isbn,name,author,copies)
-values('34577','The Little Prince','Antoine de Saint',2);
+values('34577','the little prince','antoine de saint',2);
 insert into book(isbn,name,author,copies)
-values('7545454','The Little Engine That Could','Watty Piper',1);
+values('7545454','the little engine that could','watty piper',1);
 insert into book(isbn,name,author,copies)
-values('243566','Stuart Little','E.B. White',5);
+values('243566','stuart little','e.b. white',5);
 insert into book(isbn,name,author,copies)
-values('576875','Life of Pi','Yann Martel',10);
+values('576875','life of pi','yann martel',10);
 
 
 insert into book_tag(isbn,tag_id)

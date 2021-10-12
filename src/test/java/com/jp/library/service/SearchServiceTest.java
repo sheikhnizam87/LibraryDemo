@@ -27,43 +27,43 @@ public class SearchServiceTest {
     @Test
     @Transactional
     public void testSearchBookByBookName() {
-        List<ResponseObject> response = searchService.getBookByName("The Little Engine That Could");
+        List<ResponseObject> response = searchService.getBookByName("the little engine that could");
         assertTrue(response.size()>0);
     }
 
     @Test
     @Transactional
     public void testSearchBookByBookAuthor() {
-        List<ResponseObject> response = searchService.getBookByAuthorName("Antoine de Saint");
+        List<ResponseObject> response = searchService.getBookByAuthorName("antoine de saint");
         assertTrue(response.size()>0);
     }
 
     @Test
     @Transactional
     public void testSearchBookByTag() {
-        List<ResponseObject> response = searchService.getBookByTagName("Horror");
+        List<ResponseObject> response = searchService.getBookByTagName("horror");
         assertTrue(response.size()==2);
-        assertTrue(response.get(0).getName().equals("The Little Engine That Could") || response.get(0).getName().equals("Stuart Little"));
+        assertTrue(response.get(0).getName().equals("the little engine that could") || response.get(0).getName().equals("stuart little"));
     }
 
     @Test
     @Transactional
     public void testSearchBookByBookName_invalid() {
-        List<ResponseObject> response = searchService.getBookByName("The Little Engine");
+        List<ResponseObject> response = searchService.getBookByName("the little engine");
         assertTrue(response.size() ==0);
     }
 
     @Test
     @Transactional
     public void testSearchBookByBookAuthor_invalid() {
-        List<ResponseObject> response = searchService.getBookByAuthorName("Blade wilson");
+        List<ResponseObject> response = searchService.getBookByAuthorName("blade wilson");
         assertTrue(response.size() ==0);
     }
 
     @Test
     @Transactional
     public void testSearchBookByTag_invalid() {
-        List<ResponseObject> response = searchService.getBookByAuthorName("Comic");
+        List<ResponseObject> response = searchService.getBookByAuthorName("comic");
         assertTrue(response.size() ==0);
     }
 }
